@@ -4,3 +4,4 @@
 [GPU]
 occlusion_query = "strict" # Fixes unoccluded lens flares
 occlusion_query_saturation = 0.75 # Fixes excessively bright flares
+depth_bias_shader_offset = true # Fixes the decals

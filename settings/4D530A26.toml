@@ -4,3 +4,4 @@
 [GPU]
 vsync = false # Unlocks framerate (Combined with framerate limit set to 0)
 occlusion_query = "strict" # Fixes unoccluded lens flares
+draw_resolution_scale_threshold = 360 # Fixes post-process effects when using resolution scaling. Doesn't activate when rendering 1x1.

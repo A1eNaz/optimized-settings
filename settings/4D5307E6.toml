@@ -3,6 +3,7 @@
 
 [GPU]
 readback_resolve = "full" # Fixes gamma
+depth_bias_shader_offset = true # Fixes the rare Z-fighting decal
 
 [Memory]
 protect_zero = false # Can fix some crashes

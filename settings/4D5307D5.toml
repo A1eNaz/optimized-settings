@@ -2,4 +2,5 @@
 # Title ID: 4D5307D5
 
 [GPU]
+depth_bias_shader_offset = true # Fixes the decals
 vsync = false # Unlocks framerate (Combined with framerate limit set to 0)

@@ -3,3 +3,4 @@
 
 [GPU]
 framerate_limit = 120 # Caps the framerate to 120
+readback_resolve = "fast" # Fixes light corona occlusion
