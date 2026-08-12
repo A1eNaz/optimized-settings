@@ -2,6 +2,6 @@
 # Title ID: 494707EE
 
 [GPU]
+force_depth_clamp = true # Fixes broken lighting in Escape From Butcher Bay Remake
 occlusion_query = "fast-alt" # Fixes autoexposure issue (brightness)
 readback_resolve = "fast" # Works in concert with occlusion queries to fix auto-exposure
-force_depth_clamp = true # Fixes broken lighting in Escape From Butcher Bay Remake

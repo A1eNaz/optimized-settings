@@ -2,5 +2,5 @@
 # Title ID: 4D530877
 
 [GPU]
-readback_resolve = "fast" # Fixes excessive brightness
 depth_bias_shader_offset = true # Fixes the decals
+readback_resolve = "fast" # Fixes excessive brightness

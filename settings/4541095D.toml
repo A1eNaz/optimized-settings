@@ -2,5 +2,5 @@
 # Title ID: 4541095D
 
 [GPU]
-occlusion_query = "strict" # Fixes unoccluded lens flares
 depth_bias_shader_offset = true # Fixes the decals
+occlusion_query = "strict" # Fixes unoccluded lens flares

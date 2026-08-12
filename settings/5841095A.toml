@@ -2,5 +2,5 @@
 # Title ID: 5841095A
 
 [GPU]
-readback_resolve = "fast" # Fixes brightness at the cost of performance
 draw_resolution_scale_threshold = 512 # Reduces gaussian blur based upscaling artifacts. Stays inert when playing with 1x1 scaling.
+readback_resolve = "fast" # Fixes brightness at the cost of performance

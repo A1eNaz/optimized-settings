@@ -2,6 +2,6 @@
 # Title ID: 565707D0
 
 [GPU]
-occlusion_query = "strict" # Fixes unoccluded lens flares
 depth_bias_shader_offset = true # Fixes the decals
 draw_resolution_scale_threshold = 256 # Fixes post-process effects when using resolution scaling. Doesn't activate when rendering 1x1.
+occlusion_query = "strict" # Fixes unoccluded lens flares

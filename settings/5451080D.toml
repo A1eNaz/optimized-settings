@@ -2,5 +2,5 @@
 # Title ID: 5451080D
 
 [GPU]
-vsync = false # Unlocks FPS (Combined with Framerate Limit set to 0).
 occlusion_query = "strict" # Fixes unoccluded lens flares
+vsync = false # Unlocks FPS (Combined with Framerate Limit set to 0).

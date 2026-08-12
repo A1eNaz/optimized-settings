@@ -183,6 +183,12 @@ You can contribute to this project in several ways:
 
    The linter is safe to run — values and comments are preserved; only spacing, line endings, and section ordering change. Section ordering is derived from `template.toml` at the repo root (the standard list of all known Xenia sections); pass `--xenia-config <path>` to use a specific Xenia config instead.
 
+   If you also want the options within each section reordered to match a specific Xenia config, add `--reorder-options` (it requires `--xenia-config`):
+
+   ```bash
+   python scripts/format_settings.py settings --xenia-config <path> --reorder-options
+   ```
+
    A `--check` flag is also available if you want a dry run that fails (exits non-zero) when any file would change:
 
    ```bash

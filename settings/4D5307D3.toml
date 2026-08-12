@@ -2,5 +2,5 @@
 # Title ID: 4D5307D3
 
 [GPU]
-framerate_limit = 120 # Caps the FPS to 60
 depth_bias_shader_offset = true # Fixes the decals
+framerate_limit = 120 # Caps the FPS to 60

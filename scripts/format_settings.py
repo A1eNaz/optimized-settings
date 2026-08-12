@@ -20,8 +20,15 @@ Section ordering:
   - With `--xenia-config <path>`: use the order from the Xenia config.
   - Without `--xenia-config`: preserve the existing section order.
 
+Option ordering:
+  - With `--xenia-config <path>` plus `--reorder-options`: additionally sort
+    the options inside each section to match the option order in the Xenia
+    config. Options not present in the Xenia config keep their relative order
+    and are placed after the known ones.
+
 Comments, option values, option keys, and the set of options in a file are
-preserved verbatim. Only spacing, line endings, and section ordering change.
+preserved verbatim. Only spacing, line endings, and section/option ordering
+change.
 """
 
 import argparse
@@ -31,7 +38,7 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _toml_utils import (
@@ -110,6 +117,15 @@ def canonical_section_order(xenia_config: ConfigFile) -> List[str]:
     return [s.name for s in xenia_config.sections]
 
 
+def canonical_option_order(xenia_config: ConfigFile) -> Dict[str, Dict[str, int]]:
+    order: Dict[str, Dict[str, int]] = {}
+    for section in xenia_config.sections:
+        order[section.name] = {
+            option.name: i for i, option in enumerate(section.options)
+        }
+    return order
+
+
 def sort_sections(
     sections: List[ConfigSection],
     xenia_order: List[str],
@@ -121,6 +137,18 @@ def sort_sections(
         return (rank.get(section.name, fallback),)
 
     return sorted(sections, key=key)
+
+
+def sort_options(
+    options: List[ConfigOption],
+    option_order: Dict[str, int],
+) -> List[ConfigOption]:
+    fallback = len(option_order)
+
+    def key(option: ConfigOption) -> int:
+        return option_order.get(option.name, fallback)
+
+    return sorted(options, key=key)
 
 
 # =========================
@@ -143,7 +171,11 @@ def render_option_line(option: ConfigOption) -> str:
     return base
 
 
-def render_document(config: ConfigFile, xenia_order: Optional[List[str]]) -> bytes:
+def render_document(
+    config: ConfigFile,
+    xenia_order: Optional[List[str]],
+    xenia_option_order: Optional[Dict[str, Dict[str, int]]] = None,
+) -> bytes:
     if xenia_order is None:
         sections = list(config.sections)
     else:
@@ -156,7 +188,12 @@ def render_document(config: ConfigFile, xenia_order: Optional[List[str]]) -> byt
         parts.append("")
         for idx, section in enumerate(sections):
             parts.append(f"[{section.name}]")
-            for option in section.options:
+            options = section.options
+            if xenia_option_order is not None:
+                section_option_order = xenia_option_order.get(section.name)
+                if section_option_order:
+                    options = sort_options(options, section_option_order)
+            for option in options:
                 parts.append(render_option_line(option))
             if idx != len(sections) - 1:
                 parts.append("")
@@ -174,6 +211,7 @@ def process_file(
     path: Path,
     xenia_order: Optional[List[str]],
     check_only: bool,
+    xenia_option_order: Optional[Dict[str, Dict[str, int]]] = None,
 ) -> FileResult:
     try:
         original_bytes = path.read_bytes()
@@ -197,7 +235,7 @@ def process_file(
     except HeaderError as e:
         return FileResult(path, changed=False, skipped=True, reason=str(e))
 
-    new_bytes = render_document(config, xenia_order)
+    new_bytes = render_document(config, xenia_order, xenia_option_order)
 
     if new_bytes == original_bytes:
         return FileResult(path, changed=False)
@@ -248,6 +286,12 @@ def main() -> None:
         "also missing, existing section order is preserved as-is.",
     )
     parser.add_argument(
+        "--reorder-options",
+        action="store_true",
+        help="With --xenia-config, also reorder the options inside each section "
+        "to match the option order in the xenia config.",
+    )
+    parser.add_argument(
         "--check",
         action="store_true",
         help="Dry run: print files that would change and exit non-zero if any",
@@ -264,6 +308,7 @@ def main() -> None:
         logger.setLevel(logging.DEBUG)
 
     xenia_order: Optional[List[str]] = None
+    xenia_option_order: Optional[Dict[str, Dict[str, int]]] = None
     if args.xenia_config is not None:
         xenia_path = Path(args.xenia_config)
         if not xenia_path.exists():
@@ -280,7 +325,15 @@ def main() -> None:
         logger.info(
             f"Canonical section order ({len(xenia_order)} sections) loaded from {xenia_path.name}"
         )
+
+        if args.reorder_options:
+            xenia_option_order = canonical_option_order(xenia_config)
+            logger.info(
+                f"Canonical option order loaded from {xenia_path.name}"
+            )
     else:
+        if args.reorder_options:
+            parser.error("--reorder-options requires --xenia-config")
         logger.info("No --xenia-config found; preserving existing section order")
 
     toml_files = collect_toml_files(args.settings_dir)
@@ -290,7 +343,12 @@ def main() -> None:
 
     results: List[FileResult] = []
     for path in toml_files:
-        result = process_file(path, xenia_order, check_only=args.check)
+        result = process_file(
+            path,
+            xenia_order,
+            check_only=args.check,
+            xenia_option_order=xenia_option_order,
+        )
         results.append(result)
         if result.skipped:
             logger.warning(f"skipped: {path.name} ({result.reason})")
