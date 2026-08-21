@@ -2,13 +2,13 @@
 # Title ID: 5553088C
 
 [APU]
-xma_decoder = "old"    # Fixes missing audio.
+xma_decoder = "old" # Fixes missing audio.
 
 [GPU]
-framerate_limit = 120    # 60 FPS cap.
-gpu_allow_invalid_upload_range = true    # Fixes the character models.
-occlusion_query = "fast"    # Fixes tagging/highlighting.
+framerate_limit = 120 # 60 FPS cap.
+gpu_allow_invalid_upload_range = true # Fixes the character models.
+occlusion_query = "fast" # Fixes tagging/highlighting.
 
 [Memory]
-scribble_heap = true    # Used with scribble_heap_value
-scribble_heap_value = 255    # Fixes majority of the graphics.
+scribble_heap = true # Used with scribble_heap_value
+scribble_heap_value = 255 # Fixes majority of the graphics.

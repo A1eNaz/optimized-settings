@@ -2,4 +2,4 @@
 # Title ID: 5454086B
 
 [GPU]
-readback_resolve = "fast"    # Fixes the black screen issue.
+readback_resolve = "fast" # Fixes the black screen issue.

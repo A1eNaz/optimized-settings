@@ -2,6 +2,6 @@
 # Title ID: 4B4E085C
 
 [GPU]
-framerate_limit = 120    # 60 FPS cap.
-gpu = "vulkan"    # Fixes occasional vertex explosions while on "Reflex Mode", explosions and garbled textures.
-readback_resolve = "fast"    # Fixes excessive brightness on daytime levels.
+framerate_limit = 120 # 60 FPS cap.
+gpu = "vulkan" # Fixes occasional vertex explosions while on "Reflex Mode", explosions and garbled textures.
+readback_resolve = "fast" # Fixes excessive brightness on daytime levels.

@@ -2,8 +2,8 @@
 # Title ID: 5454082B
 
 [GPU]
-framerate_limit = 120    # 60 FPS cap.
-occlusion_query = "fast"    # Fixes lens flares.
+framerate_limit = 120 # 60 FPS cap.
+occlusion_query = "fast" # Fixes lens flares.
 
 [Memory]
-protect_zero = false    # Fixes freezing issues on Netplay.
+protect_zero = false # Fixes freezing issues on Netplay.
