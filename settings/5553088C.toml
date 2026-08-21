@@ -5,10 +5,10 @@
 xma_decoder = "old" # Fixes missing audio.
 
 [GPU]
-framerate_limit = 120 # 60 FPS cap.
+framerate_limit = 120 # Caps the framerate to 60.
 gpu_allow_invalid_upload_range = true # Fixes the character models.
 occlusion_query = "fast" # Fixes tagging/highlighting.
 
 [Memory]
-scribble_heap = true # Used with scribble_heap_value
-scribble_heap_value = 255 # Fixes majority of the graphics.
+scribble_heap = true # Used with scribble_heap_value to fix majority of graphics.
+scribble_heap_value = 255 # Used with scribble_heap to fix majority of graphics.

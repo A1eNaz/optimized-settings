@@ -8,6 +8,6 @@ xma_decoder = "old" # Fixes missing audio.
 break_on_unimplemented_instructions = false # Fixes the crashing problem.
 
 [GPU]
-framerate_limit = 120 # 60 FPS cap.
+framerate_limit = 120 # Caps the framerate to 60.
 readback_memexport = true # Renders graphics.
 render_target_path_d3d12 = "rov" # Fixes missing textures.
