@@ -1,0 +1,6 @@
+# Title Name: Assassin's Creed: Revelations
+# Title ID: 55530879
+
+[GPU]
+framerate_limit = 120    # 60 FPS cap.
+occlusion_query = "strict"    # Prevent unoccluded lens flares and fixes geometry flickering.

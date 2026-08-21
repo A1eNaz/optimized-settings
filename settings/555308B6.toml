@@ -1,0 +1,11 @@
+# Title Name: Tom Clancy's Splinter Cell: Blacklist
+# Title ID: 555308B6
+
+[APU]
+xma_decoder = "old"    # Fixes missing audio.
+
+[GPU]
+framerate_limit = 120    # 60 FPS cap.
+occlusion_query = "strict"    # Fixes lens flares.
+readback_memexport = true    # Renders graphics
+readback_resolve = "fast"    # Fixes missing textures.

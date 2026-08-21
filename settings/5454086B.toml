@@ -1,0 +1,5 @@
+# Title Name: Max Payne 3
+# Title ID: 5454086B
+
+[GPU]
+readback_resolve = "fast"    # Fixes the black screen issue.
